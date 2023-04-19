@@ -24,7 +24,7 @@ public class Fourmiliere {
   // la liste des fourmis de la fourmiliere. 
   // Attention : la position X,Y d'une fourmi doit correspondre à un booleen true 
   // dans le tableau fourmis
-  private List<Fourmi> lesFourmis ;  
+  private List<Fourmi> lesFourmis ;
 	
   // Tableaux contenant les murs, les fourmis et les graines. 
   // Attention : pour un terrain [1..hauteur]x[1..largeur], ces tableaux 
