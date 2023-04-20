@@ -14,6 +14,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.geometry.Insets;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 
 /**
  * Simple Preloader Using the ProgressBar Control
@@ -21,16 +24,14 @@ import javafx.geometry.Insets;
  * @author 06sha
  */
 public class GrilleFourmiliere extends GridPane {
-    
-    ProgressBar bar;
-    Stage stage;
     Rectangle[][] grid;
     
     public GrilleFourmiliere(int x, int y){
         super();
         
         Insets cellPadding = new Insets(1);
-        this.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        this.setStyle("-fx-border-color: black; -fx-border-width: 1px;");
+        this.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(5), Insets.EMPTY)));
         this.grid = new Rectangle[x][y];
         for(int i = 0; i < x; i++){
             for(int u = 0; u < y; u++){

@@ -32,7 +32,6 @@ public class TestGrilleFourmiliere extends Application {
         
         Pane root = new Pane();
         root.getChildren().add(g);
-        root.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(5), Insets.EMPTY)));
         Scene scene = new Scene(root, 300, 250);
         
         primaryStage.setTitle("Hello World!");
