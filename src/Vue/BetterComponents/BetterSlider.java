@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXPreloader.java to edit this template
  */
-package Vue;
+package Vue.BetterComponents;
 
 import javafx.application.Preloader;
 import javafx.application.Preloader.ProgressNotification;
@@ -25,16 +25,18 @@ import java.text.NumberFormat;
  *
  * @author 06sha
  */
-public class SliderBetter extends HBox {
+public class BetterSlider extends HBox {
     private Slider slider;
-    SliderBetter(String sLabel, double min, double max, double valeur){
+    public BetterSlider(String sLabel, double min, double max, double valeur){
         super();
         Label l = new Label(sLabel);
         TextField tfValue = new TextField();
         this.slider = new Slider(min, max, valeur);
-        this.slider.setShowTickMarks(true); // affiche les marques 
-        this.slider.setMajorTickUnit(10); // intervalle des grandes marques
-        this.slider.setMinorTickCount(1); // intervalle des petites marques 
+        this.slider.setSnapToTicks(true); // décale sur la valeur d'un tick
+        this.slider.setShowTickMarks(true); // affiche les marques
+        this.slider.setShowTickLabels(true); // indique la valeur des grandes marques
+        this.slider.setMajorTickUnit(5); // intervalle des grandes marques
+        this.slider.setMinorTickCount(4); // nombre de petites marques entre deux grandes
         
         tfValue.textProperty().bindBidirectional(this.valueProperty(), NumberFormat.getNumberInstance());
         

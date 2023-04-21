@@ -2,36 +2,36 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXPreloader.java to edit this template
  */
-package Vue;
+package Vue.BetterComponents;
 
 import javafx.application.Preloader;
 import javafx.application.Preloader.ProgressNotification;
 import javafx.application.Preloader.StateChangeNotification;
+import javafx.beans.property.Property;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-
 /**
  * Simple Preloader Using the ProgressBar Control
  *
  * @author 06sha
  */
-public class InitialisationFourmiliere extends BorderPane {
-    private BetterTextField sizeGrid;
-    private BetterTextField capaCase;
-    private SliderBetter simulSpeed;
+public class BetterTextField extends HBox {
+    private Label label;
+    private TextField txt;
     
-    
-    public InitialisationFourmiliere(){
+    public BetterTextField(String nom, String value){
         super();
         
-        sizeGrid = new BetterTextField("Taille Fourmiliere");
-        capaCase = new BetterTextField("Capacité case");
-        simulSpeed = new SliderBetter("Vitesse de simulation", 1, 10, 5);
+        label = new Label(nom + " :");
+        txt = new TextField(value);
+        this.getChildren().addAll(label, txt);
         
-        
-        
+    }
+    
+    public Property textProperty(){
+        return txt.textProperty();
     }
 }

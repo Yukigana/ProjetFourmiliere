@@ -4,25 +4,26 @@
  */
 package TestVue;
 
-import Vue.InterfaceFourmiliere;
+import Vue.GrilleFourmiliere;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
  *
  * @author 06sha
  */
-public class TestInterfaceFourmiliere extends Application {
+public class TestGrilleFourmiliere extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        InterfaceFourmiliere root = new InterfaceFourmiliere(10, 10);
+        GrilleFourmiliere g = new GrilleFourmiliere(10, 10);
         
+        g.setWallCase(9, 9);
+        
+        Pane root = new Pane();
+        root.getChildren().add(g);
         Scene scene = new Scene(root, 300, 250);
         
         primaryStage.setTitle("Hello World!");

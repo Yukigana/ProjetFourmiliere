@@ -16,6 +16,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -25,19 +26,26 @@ import javafx.stage.Stage;
  */
 public class InterfaceFourmiliere extends BorderPane {
     private Button exit;
-    private OptionsFourmiliere options;
+    private StatsFourmiliere stats;
+    private ParametreFourmiliere parametre;
+    private ActionsFourmiliere actions;
     private GrilleFourmiliere grille;
     private Pane pane;
     
     public InterfaceFourmiliere(int x, int y){
         super();
-        this.options = new OptionsFourmiliere();
+        VBox v = new VBox();
+        this.stats = new StatsFourmiliere();
+        this.parametre = new ParametreFourmiliere();
+        this.actions = new ActionsFourmiliere();
+        
+        v.getChildren().addAll(stats, parametre, actions);
         
         this.grille = new GrilleFourmiliere(x, y);
         this.pane = new Pane(grille);
         
         this.setCenter(pane);
-        this.setRight(options);
+        this.setRight(v);
         
         /*
             Button exit
