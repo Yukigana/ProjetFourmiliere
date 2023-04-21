@@ -30,7 +30,7 @@ public class StatsFourmiliere extends VBox {
         Label titre = new Label("Statistiques :");
         
         this.nbSeeds = new BetterLabel("Nombre de graines par case", "10");
-        this.nbFourmi = new BetterLabel("Nombre de fourmis par case", "10");
+        this.nbFourmi = new BetterLabel("Nombre de fourmis", "10");
         this.nbIteration = new BetterLabel("Nombre d'itérations", "0");
         
         this.getChildren().addAll(titre, nbSeeds, nbFourmi, nbIteration);

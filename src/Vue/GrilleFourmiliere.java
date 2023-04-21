@@ -4,9 +4,12 @@
  */
 package Vue;
 
+import Controleur.ControleurGrille;
 import javafx.application.Preloader;
 import javafx.application.Preloader.ProgressNotification;
 import javafx.application.Preloader.StateChangeNotification;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.GridPane;
@@ -26,8 +29,12 @@ import javafx.scene.layout.CornerRadii;
 public class GrilleFourmiliere extends GridPane {
     Rectangle[][] grid;
     
-    public GrilleFourmiliere(int x, int y){
+    private ControleurGrille c;
+    
+    public GrilleFourmiliere(int x, int y, ControleurGrille cg){
         super();
+        
+        c = cg;
         
         Insets cellPadding = new Insets(1);
         this.setStyle("-fx-border-color: black; -fx-border-width: 1px;");
@@ -42,6 +49,13 @@ public class GrilleFourmiliere extends GridPane {
             }
         }
         
+        this.setOnMouseClicked(event -> {
+            if(event.isShiftDown()){
+                c.setFourmi(event.getX(), event.getY());
+            }
+            else c.setWall(event.getX(), event.getY());
+        });
+        
     }
     
     public void setFourmiCase(int x, int y, boolean seed){
@@ -49,12 +63,9 @@ public class GrilleFourmiliere extends GridPane {
         else grid[x][y].setFill(Color.BLUE);
     }
     
-    public void setWallCase(int x, int y){
-        grid[x][y].setFill(Color.BLACK);
-    }
-    
-    public void setVoidCase(int x, int y){
-        grid[x][y].setFill(Color.WHITE);
+    public void setWallCase(int x, int y, boolean yes){
+        if(yes)grid[x][y].setFill(Color.BLACK);
+        else grid[x][y].setFill(Color.WHITE);
     }
     
     public void setSeedCase(int x, int y, int redValue){

@@ -4,6 +4,7 @@
  */
 package Vue;
 
+import Controleur.MainControleur;
 import javafx.application.Platform;
 import javafx.application.Preloader;
 import javafx.application.Preloader.ProgressNotification;
@@ -32,16 +33,21 @@ public class InterfaceFourmiliere extends BorderPane {
     private GrilleFourmiliere grille;
     private Pane pane;
     
-    public InterfaceFourmiliere(int x, int y){
+    private MainControleur mainControleur;
+    
+    public InterfaceFourmiliere(int x, int y, MainControleur c){
         super();
+        
+        mainControleur = c;
+        
         VBox v = new VBox();
         this.stats = new StatsFourmiliere();
-        this.parametre = new ParametreFourmiliere();
+        this.parametre = new ParametreFourmiliere(x);
         this.actions = new ActionsFourmiliere();
         
         v.getChildren().addAll(stats, parametre, actions);
         
-        this.grille = new GrilleFourmiliere(x, y);
+        this.grille = new GrilleFourmiliere(x, y, c.getCTRGrid());
         this.pane = new Pane(grille);
         
         this.setCenter(pane);
@@ -59,10 +65,14 @@ public class InterfaceFourmiliere extends BorderPane {
         this.exit.setOnMouseClicked(new EventHandler(){
             @Override
             public void handle(Event event) {
-                Platform.exit();
+                c.exit();
             }
         });
         
         BorderPane.setAlignment(pane, Pos.CENTER_RIGHT);
+    }
+    
+    public GrilleFourmiliere getGrid(){
+        return grille;
     }
 }

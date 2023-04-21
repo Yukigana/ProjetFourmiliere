@@ -26,14 +26,14 @@ public class ParametreFourmiliere extends VBox {
     private BetterSlider simulSpeed;
     private InitAlea alea;
     
-    ParametreFourmiliere(){
+    ParametreFourmiliere(int x){
         super();
         this.setStyle("-fx-border-color: black; -fx-border-width: 1px;");
         Label titre = new Label("Paramètres :");
         
-        sizeGrid = new BetterTextField("Taille Fourmiliere", "10");
+        sizeGrid = new BetterTextField("Taille Fourmiliere", String.valueOf(x));
         capaCase = new BetterTextField("Capacité case", "10");
-        simulSpeed = new BetterSlider("Vitesse de simulation", 1, 10, 5);
+        simulSpeed = new BetterSlider("Vitesse de simulation", 0, 10, 5);
         
         alea = new InitAlea();
         
