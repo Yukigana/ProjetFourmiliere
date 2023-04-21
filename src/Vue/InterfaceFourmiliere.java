@@ -47,7 +47,7 @@ public class InterfaceFourmiliere extends BorderPane {
         
         v.getChildren().addAll(stats, parametre, actions);
         
-        this.grille = new GrilleFourmiliere(x, y, c.getCTRGrid());
+        this.grille = new GrilleFourmiliere(x, y, mainControleur.getCTRGrid());
         this.pane = new Pane(grille);
         
         this.setCenter(pane);

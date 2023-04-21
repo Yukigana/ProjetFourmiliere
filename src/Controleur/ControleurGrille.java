@@ -23,27 +23,52 @@ public class ControleurGrille{
     private Fourmiliere fourmiliere;
     private GrilleFourmiliere vueFourmiliere;
     
-    ControleurGrille(Fourmiliere f, GrilleFourmiliere vf){
+    ControleurGrille(Fourmiliere f){//, GrilleFourmiliere vf){
         fourmiliere = f;
-        vueFourmiliere = vf;
+        //vueFourmiliere = vf;
     }
     
     public void setWall(double x, double y){
-        int coordX = (int) x / 11;
-        int coordY = (int) y / 11;
+        int coordX = (int) x / 12;
+        int coordY = (int) y / 12;
          
-        boolean b = fourmiliere.getMur(coordX, coordY);
+        boolean b = fourmiliere.getMur(coordX+1, coordY+1);
          
-        fourmiliere.setMur(coordX, coordY, !b);
+        fourmiliere.setMur(coordX+1, coordY+1, !b);
         vueFourmiliere.setWallCase(coordX, coordY, !b);
     }
      
     public void setFourmi(double x, double y){
-        int coordX = (int) x / 11;
-        int coordY = (int) y / 11;
-         
-        if(fourmiliere.getMur(coordX, coordY)){
-             
+        int coordX = (int) x / 12;
+        int coordY = (int) y / 12;
+        
+        fourmiliere.ajouteFourmi(coordX+1, coordY+1);
+        vueFourmiliere.setFourmiCase(coordX, coordY, false);
+    }
+    
+    public void setSeedAmount(double x, double y, double value){
+        int coordX = (int) x / 12;
+        int coordY = (int) y / 12;
+        
+        
+        int QMax = fourmiliere.getQMax();
+        int caseValue = fourmiliere.getQteGraines(coordX+1, coordY+1) + (int) value/20;
+        
+        if(QMax < caseValue){
+            fourmiliere.setQteGraines(coordX+1, coordY+1, QMax);
+            vueFourmiliere.setQteGraines(coordX, coordY, 0);
         }
+        else if(0 > caseValue){
+            fourmiliere.setQteGraines(coordX+1, coordY+1, 0);
+            vueFourmiliere.setQteGraines(coordX, coordY, 255);
+        }
+        else{
+            fourmiliere.setQteGraines(coordX+1, coordY+1, caseValue);
+            vueFourmiliere.setQteGraines(coordX, coordY, 255-((255/QMax)*caseValue));
+        }
+    }
+    
+    public void setVueFourmiliere(GrilleFourmiliere vueF){
+        vueFourmiliere = vueF;
     }
 }

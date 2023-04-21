@@ -56,6 +56,10 @@ public class GrilleFourmiliere extends GridPane {
             else c.setWall(event.getX(), event.getY());
         });
         
+        this.setOnScroll(event -> {
+            c.setSeedAmount(event.getX(), event.getY(), event.getDeltaY());
+        });
+        
     }
     
     public void setFourmiCase(int x, int y, boolean seed){
@@ -68,8 +72,8 @@ public class GrilleFourmiliere extends GridPane {
         else grid[x][y].setFill(Color.WHITE);
     }
     
-    public void setSeedCase(int x, int y, int redValue){
-        grid[x][y].setFill(Color.rgb(redValue, 0, 0));
+    public void setQteGraines(int x, int y, int value){
+        grid[x][y].setFill(Color.rgb(255, value, value));
     }
     
 }

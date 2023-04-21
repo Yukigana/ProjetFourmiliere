@@ -33,11 +33,13 @@ public class MainControleur {
     private Scene scene;
     
     public MainControleur(){
+        fourmiliere = new Fourmiliere(20, 20, 100);
+        
+        ctrGrille = new ControleurGrille(fourmiliere);
+        
         mainVue = new InterfaceFourmiliere(20, 20, this);
         
-        fourmiliere = new Fourmiliere(20, 20, 10);
-        
-        ctrGrille = new ControleurGrille(fourmiliere, mainVue.getGrid());
+        ctrGrille.setVueFourmiliere(mainVue.getGrid());
         
         scene = new Scene(mainVue, 1000, 350);
     }
