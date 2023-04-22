@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.beans.property.Property;
+import javafx.beans.property.StringProperty ;
 
 /**
  * Simple Preloader Using the ProgressBar Control
@@ -29,23 +30,23 @@ public class StatsFourmiliere extends VBox {
         this.setStyle("-fx-border-color: black; -fx-border-width: 1px;");
         Label titre = new Label("Statistiques :");
         
-        this.nbSeeds = new BetterLabel("Nombre de graines par case", "10");
-        this.nbFourmi = new BetterLabel("Nombre de fourmis", "10");
+        this.nbSeeds = new BetterLabel("Nombre de graines", "0");
+        this.nbFourmi = new BetterLabel("Nombre de fourmis", "0");
         this.nbIteration = new BetterLabel("Nombre d'itérations", "0");
         
         this.getChildren().addAll(titre, nbSeeds, nbFourmi, nbIteration);
     }
     
-    public Property seedsProperty(){
+    public Property grainesProperty(){
         return nbSeeds.textProperty();
     }
     
-    public Property fourmisProperty(){
-        return nbSeeds.textProperty();
+    public StringProperty  fourmisProperty(){
+        return nbFourmi.textProperty();
     }
     
-    public Property iterationProperty(){
-        return nbSeeds.textProperty();
+    public Property iterationsProperty(){
+        return nbIteration.textProperty();
     }
     
     

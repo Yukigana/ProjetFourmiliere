@@ -38,7 +38,7 @@ public class BetterSlider extends HBox {
         this.slider.setMajorTickUnit(5); // intervalle des grandes marques
         this.slider.setMinorTickCount(4); // nombre de petites marques entre deux grandes
         
-        tfValue.textProperty().bindBidirectional(this.valueProperty(), NumberFormat.getNumberInstance());
+        tfValue.textProperty().bindBidirectional(slider.valueProperty(), NumberFormat.getNumberInstance());
         
         
         this.getChildren().addAll(l, tfValue, this.slider);

@@ -64,6 +64,22 @@ public class Fourmiliere {
       for (int j =0 ; j < largeur+2; j++)
 	qteGraines [i][j]=0 ; 
   }
+  
+  // Renvoie le nombre de fourmis dans la fourmiliere
+  public int getNbFourmis(){
+      return lesFourmis.size();
+  }
+  
+  // Renvoie le nombre de graines dans la fourmiliere
+  public int getNbGraines(){
+      int cptGraine = 0;
+      for(int x = 1; x <= hauteur; x++){
+          for(int y = 1; y <= hauteur; y++){
+              cptGraine += qteGraines[x][y];
+          }
+      }
+      return cptGraine;
+  }
     
   /**
    * Retourne la largeur de la fourmiliere

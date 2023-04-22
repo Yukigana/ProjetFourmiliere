@@ -72,7 +72,21 @@ public class InterfaceFourmiliere extends BorderPane {
         BorderPane.setAlignment(pane, Pos.CENTER_RIGHT);
     }
     
+    
+    
     public GrilleFourmiliere getGrid(){
         return grille;
+    }
+    
+    public StatsFourmiliere getStats(){
+        return stats;
+    }
+    
+    public ParametreFourmiliere getParametre(){
+        return parametre;
+    }
+    
+    public ActionsFourmiliere getActions(){
+        return actions;
     }
 }

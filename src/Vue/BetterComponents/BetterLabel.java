@@ -7,7 +7,7 @@ package Vue.BetterComponents;
 import javafx.application.Preloader;
 import javafx.application.Preloader.ProgressNotification;
 import javafx.application.Preloader.StateChangeNotification;
-import javafx.beans.property.Property;
+import javafx.beans.property.StringProperty ;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -30,7 +30,7 @@ public class BetterLabel extends HBox {
         this.getChildren().addAll(label, this.value);
     }
     
-    public Property textProperty(){
+    public StringProperty textProperty(){
         return this.value.textProperty();
     }
 }

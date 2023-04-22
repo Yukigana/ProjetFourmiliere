@@ -6,6 +6,7 @@ package Controleur;
 
 import Modele.Fourmiliere;
 import Vue.GrilleFourmiliere;
+import Vue.ParametreFourmiliere;
 import javafx.application.Preloader;
 import javafx.application.Preloader.ProgressNotification;
 import javafx.application.Preloader.StateChangeNotification;
@@ -21,11 +22,39 @@ import javafx.stage.Stage;
  */
 public class ControleurGrille{
     private Fourmiliere fourmiliere;
-    private GrilleFourmiliere vueFourmiliere;
+    private GrilleFourmiliere grilleFourmiliere;
+    private ParametreFourmiliere parametreFourmiliere;
     
-    ControleurGrille(Fourmiliere f){//, GrilleFourmiliere vf){
+    private ControleurBindings ctrBinding;
+    
+    ControleurGrille(Fourmiliere f){
         fourmiliere = f;
-        //vueFourmiliere = vf;
+    }
+    
+    public void initStartFourmiliere(){
+        
+    }
+    
+    public void initVueFourmiliere(){
+        int XMax, YMax;
+        XMax = fourmiliere.getLargeur();
+        YMax = fourmiliere.getHauteur();
+        for(int x = 0; x < XMax; x++){
+            for(int y = 0; y < YMax; y++){
+                boolean bMur = fourmiliere.getMur(x+1, y+1);
+                boolean bFourmi = fourmiliere.contientFourmi(x+1, y+1);
+                if(bMur)grilleFourmiliere.setWallCase(x, y, bMur);
+                else{
+                    if(bFourmi)grilleFourmiliere.setFourmiCase(x, y, false);
+                    
+                    int QMax = fourmiliere.getQMax();
+                    int caseValue = fourmiliere.getQteGraines(x+1, y+1);
+                    
+                    grilleFourmiliere.setQteGraines(x, y, 255-((255/QMax)*caseValue));
+                }
+                
+            }
+        }
     }
     
     public void setWall(double x, double y){
@@ -35,7 +64,7 @@ public class ControleurGrille{
         boolean b = fourmiliere.getMur(coordX+1, coordY+1);
          
         fourmiliere.setMur(coordX+1, coordY+1, !b);
-        vueFourmiliere.setWallCase(coordX, coordY, !b);
+        grilleFourmiliere.setWallCase(coordX, coordY, !b);
     }
      
     public void setFourmi(double x, double y){
@@ -43,7 +72,9 @@ public class ControleurGrille{
         int coordY = (int) y / 12;
         
         fourmiliere.ajouteFourmi(coordX+1, coordY+1);
-        vueFourmiliere.setFourmiCase(coordX, coordY, false);
+        grilleFourmiliere.setFourmiCase(coordX, coordY, false);
+        
+        ctrBinding.updateNbFourmi(fourmiliere.getNbFourmis());
     }
     
     public void setSeedAmount(double x, double y, double value){
@@ -56,19 +87,27 @@ public class ControleurGrille{
         
         if(QMax < caseValue){
             fourmiliere.setQteGraines(coordX+1, coordY+1, QMax);
-            vueFourmiliere.setQteGraines(coordX, coordY, 0);
+            grilleFourmiliere.setQteGraines(coordX, coordY, 0);
         }
         else if(0 > caseValue){
             fourmiliere.setQteGraines(coordX+1, coordY+1, 0);
-            vueFourmiliere.setQteGraines(coordX, coordY, 255);
+            grilleFourmiliere.setQteGraines(coordX, coordY, 255);
         }
         else{
             fourmiliere.setQteGraines(coordX+1, coordY+1, caseValue);
-            vueFourmiliere.setQteGraines(coordX, coordY, 255-((255/QMax)*caseValue));
+            grilleFourmiliere.setQteGraines(coordX, coordY, 255-((255/QMax)*caseValue));
         }
+        
+        ctrBinding.updateNbGraine(fourmiliere.getNbGraines());
     }
     
-    public void setVueFourmiliere(GrilleFourmiliere vueF){
-        vueFourmiliere = vueF;
+    public void setGrilleFourmiliere(GrilleFourmiliere grilleF){
+        grilleFourmiliere = grilleF;
+    }
+    public void setParametreFourmiliere(ParametreFourmiliere parametreF){
+        parametreFourmiliere = parametreF;
+    }
+    public void setControleurBindings(ControleurBindings ctr){
+        ctrBinding = ctr;
     }
 }

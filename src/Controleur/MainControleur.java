@@ -28,6 +28,7 @@ public class MainControleur {
     
     
     private ControleurGrille ctrGrille;
+    private ControleurBindings ctrBinding;
     
     
     private Scene scene;
@@ -36,10 +37,18 @@ public class MainControleur {
         fourmiliere = new Fourmiliere(20, 20, 100);
         
         ctrGrille = new ControleurGrille(fourmiliere);
+        ctrBinding = new ControleurBindings(fourmiliere);
         
         mainVue = new InterfaceFourmiliere(20, 20, this);
         
-        ctrGrille.setVueFourmiliere(mainVue.getGrid());
+        ctrBinding.setStatsFourmiliere(mainVue.getStats());
+        ctrGrille.setGrilleFourmiliere(mainVue.getGrid());
+        ctrGrille.setParametreFourmiliere(mainVue.getParametre());
+        ctrGrille.setControleurBindings(ctrBinding);
+        
+        
+        ctrGrille.initVueFourmiliere();
+        ctrBinding.initBindings();
         
         scene = new Scene(mainVue, 1000, 350);
     }
