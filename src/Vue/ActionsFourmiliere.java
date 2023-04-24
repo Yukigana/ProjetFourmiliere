@@ -32,5 +32,15 @@ public class ActionsFourmiliere extends HBox {
         this.getChildren().addAll(loupe, play, pause);
     }
     
+    public Button getLoupe(){
+        return loupe;
+    }
     
+    public Button getPlay(){
+        return play;
+    }
+    
+    public Button getPause(){
+        return pause;
+    }
 }

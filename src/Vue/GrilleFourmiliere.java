@@ -51,13 +51,13 @@ public class GrilleFourmiliere extends GridPane {
         
         this.setOnMouseClicked(event -> {
             if(event.isShiftDown()){
-                c.setFourmi(event.getX(), event.getY());
+                c.setFourmi(event.getX() / 12, event.getY() / 12);
             }
-            else c.setWall(event.getX(), event.getY());
+            else c.setWall((int)event.getX() / 12, (int)event.getY() / 12);
         });
         
         this.setOnScroll(event -> {
-            c.setSeedAmount(event.getX(), event.getY(), event.getDeltaY());
+            c.addGrainesMolette(event.getX() / 12, event.getY() / 12, event.getDeltaY()/20);
         });
         
     }

@@ -4,15 +4,10 @@
  */
 package Vue.BetterComponents;
 
-import javafx.application.Preloader;
-import javafx.application.Preloader.ProgressNotification;
-import javafx.application.Preloader.StateChangeNotification;
-import javafx.beans.property.Property;
-import javafx.scene.Scene;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 /**
  * Simple Preloader Using the ProgressBar Control
  *
@@ -31,7 +26,7 @@ public class BetterTextField extends HBox {
         
     }
     
-    public Property textProperty(){
+    public StringProperty textProperty(){
         return txt.textProperty();
     }
 }

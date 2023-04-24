@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.beans.property.Property;
+import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 
 /**
@@ -30,9 +31,9 @@ public class InitAlea extends GridPane {
         Insets cellPadding = new Insets(10);
         Label titre = new Label("Probabilités");
         
-        graine = new BetterTextField("Graine", "0");
-        fourmi = new BetterTextField("Fourmi", "0");
-        mur = new BetterTextField("Mur", "0");
+        graine = new BetterTextField("Graine", "30");
+        fourmi = new BetterTextField("Fourmi", "20");
+        mur = new BetterTextField("Mur", "50");
         
         this.add(titre, 1, 0);
         this.add(graine, 0, 1);
@@ -44,15 +45,15 @@ public class InitAlea extends GridPane {
         this.setMargin(mur, cellPadding);
     }
     
-    public Property graineProperty(){
+    public StringProperty graineProperty(){
         return graine.textProperty();
     }
     
-    public Property fourmiProperty(){
+    public StringProperty fourmiProperty(){
         return fourmi.textProperty();
     }
     
-    public Property murProperty(){
+    public StringProperty murProperty(){
         return mur.textProperty();
     }
     

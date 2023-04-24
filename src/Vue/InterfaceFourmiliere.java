@@ -62,17 +62,19 @@ public class InterfaceFourmiliere extends BorderPane {
         super.setBottom(this.exit);
         BorderPane.setAlignment(this.exit, Pos.CENTER_RIGHT);
         
-        this.exit.setOnMouseClicked(new EventHandler(){
-            @Override
-            public void handle(Event event) {
-                c.exit();
-            }
-        });
         
         BorderPane.setAlignment(pane, Pos.CENTER_RIGHT);
     }
     
+    public void setNewGrid(int taille){
+        this.grille = new GrilleFourmiliere(taille, taille, mainControleur.getCTRGrid());
+        this.pane = new Pane(grille);
+        this.setCenter(pane);
+    }
     
+    public Button getExit(){
+        return exit;
+    }
     
     public GrilleFourmiliere getGrid(){
         return grille;

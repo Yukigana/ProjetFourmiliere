@@ -11,10 +11,12 @@ import javafx.application.Preloader.ProgressNotification;
 import javafx.application.Preloader.StateChangeNotification;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.beans.property.Property;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.StringProperty;
 /**
  * Simple Preloader Using the ProgressBar Control
  *
@@ -25,6 +27,7 @@ public class ParametreFourmiliere extends VBox {
     private BetterTextField capaCase;
     private BetterSlider simulSpeed;
     private InitAlea alea;
+    private Button reset;
     
     ParametreFourmiliere(int x){
         super();
@@ -33,22 +36,32 @@ public class ParametreFourmiliere extends VBox {
         
         sizeGrid = new BetterTextField("Taille Fourmiliere", String.valueOf(x));
         capaCase = new BetterTextField("Capacité case", "10");
-        simulSpeed = new BetterSlider("Vitesse de simulation", 0, 10, 5);
+        simulSpeed = new BetterSlider("Vitesse de simulation", 1, 60, 5);
         
         alea = new InitAlea();
+                
+        reset = new Button("reset");
         
-        this.getChildren().addAll(titre, sizeGrid, capaCase, simulSpeed, alea);
+        this.getChildren().addAll(titre, sizeGrid, capaCase, simulSpeed, alea, reset);
     }
     
-    public Property sizeProperty(){
+    public StringProperty sizeProperty(){
         return sizeGrid.textProperty();
     }
     
-    public Property capacityProperty(){
+    public StringProperty capacityProperty(){
         return capaCase.textProperty();
     }
     
-    public DoubleProperty speedProperty(){
+    public Property speedProperty(){
         return simulSpeed.valueProperty();
+    }
+    
+    public InitAlea getAlea(){
+        return alea;
+    }
+    
+    public Button getReset(){
+        return reset;
     }
 }

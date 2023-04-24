@@ -5,9 +5,13 @@
         <group>
             <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Controleur/ControleurGrille.java</file>
             <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Modele/Fourmiliere.java</file>
-            <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/AppFourmiliere.java</file>
-            <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Vue/GrilleFourmiliere.java</file>
+            <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Vue/InterfaceFourmiliere.java</file>
+            <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Vue/InitAlea.java</file>
+            <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Controleur/ControleurBindings.java</file>
+            <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Vue/StatsFourmiliere.java</file>
+            <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Vue/ParametreFourmiliere.java</file>
             <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Controleur/MainControleur.java</file>
+            <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Vue/GrilleFourmiliere.java</file>
         </group>
     </open-files>
 </project-private>

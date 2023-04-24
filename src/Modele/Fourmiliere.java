@@ -65,6 +65,29 @@ public class Fourmiliere {
 	qteGraines [i][j]=0 ; 
   }
   
+  public void resetFourmiliere(int taille, int capacite){
+      this.largeur = taille;
+    this.hauteur = taille;
+    this.qMax = capacite ; 
+      
+    this.lesFourmis = new LinkedList<Fourmi>(); 
+    
+    fourmis = new boolean[hauteur+2][largeur+2];
+    for (int i =0 ; i < hauteur+2 ; i++)
+      for (int j =0 ; j < largeur+2 ; j++)
+	fourmis[i][j] = false ; 
+    
+    murs = new boolean[hauteur+2][largeur+2];
+    for (int i =0 ; i < hauteur+2 ; i++)
+      for (int j =0 ; j < largeur+2 ; j++)
+	murs[i][j] = (i==0)||(i==hauteur+1)||(j==0)||(j==largeur+1) ;
+    
+    qteGraines = new int[hauteur+2][largeur+2];
+    for (int i =0 ; i < hauteur+2 ; i++)
+      for (int j =0 ; j < largeur+2; j++)
+	qteGraines [i][j]=0 ; 
+  }
+  
   // Renvoie le nombre de fourmis dans la fourmiliere
   public int getNbFourmis(){
       return lesFourmis.size();
@@ -152,9 +175,24 @@ public class Fourmiliere {
   public void ajouteFourmi(int x, int y){
     if (!fourmis[y][x] && !murs[y][x]){
       Fourmi f = new Fourmi(x,y,false);
-      fourmis[y][x]=true ; 			
+      fourmis[y][x]=true ;
       lesFourmis.add(f);
-    };
+    }
+  }
+  
+  // Indique à partir de ses coordonnées si une fourmi est porteuse ou non
+  public boolean fourmiPorte(int x, int y){
+    Iterator<Fourmi> ItFourmi = lesFourmis.iterator();
+    
+    while(ItFourmi.hasNext()) {
+      Fourmi f = ItFourmi.next();
+      
+      int posX = f.getX(); 
+      int posY = f.getY(); 
+      
+      if(posX == x && posY == y) return f.porte();
+    }
+    return false;
   }
 		
   /**
@@ -214,7 +252,8 @@ public class Fourmiliere {
    */
   public void evolue() {
     Iterator<Fourmi> ItFourmi = lesFourmis.iterator();
-    while (ItFourmi.hasNext()) {
+    
+    while(ItFourmi.hasNext()) {
       Fourmi f = ItFourmi.next();
       int posX = f.getX(); 
       int posY = f.getY(); 
@@ -225,9 +264,11 @@ public class Fourmiliere {
 	  qteGraines[posY][posX]--;					
 	}
       }
+      
       // la fourmi f se déplace. 
       int deltaX ; 
       int deltaY ; 
+      
       // cptEssai compte les essais de déplacements pour eviter les blocages
       int cptEssai = 0 ; 
       do {

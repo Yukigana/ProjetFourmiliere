@@ -37,7 +37,7 @@ public class StatsFourmiliere extends VBox {
         this.getChildren().addAll(titre, nbSeeds, nbFourmi, nbIteration);
     }
     
-    public Property grainesProperty(){
+    public StringProperty grainesProperty(){
         return nbSeeds.textProperty();
     }
     
@@ -45,7 +45,7 @@ public class StatsFourmiliere extends VBox {
         return nbFourmi.textProperty();
     }
     
-    public Property iterationsProperty(){
+    public StringProperty iterationsProperty(){
         return nbIteration.textProperty();
     }
     

@@ -6,6 +6,8 @@ package Controleur;
 
 import Modele.Fourmiliere;
 import Vue.StatsFourmiliere;
+import Vue.ParametreFourmiliere;
+import Vue.InitAlea;
 import javafx.application.Preloader;
 import javafx.application.Preloader.ProgressNotification;
 import javafx.application.Preloader.StateChangeNotification;
@@ -41,21 +43,21 @@ public class ControleurBindings {
     private IntegerProperty probaFourmi;
     private IntegerProperty probaMur;
     
-    private Fourmiliere fourmiliere;
-    private StatsFourmiliere statsFourmiliere;
+    private MainControleur mainControleur;
     
-    ControleurBindings(Fourmiliere f){
-        fourmiliere = f;
+    ControleurBindings(MainControleur c){
+        mainControleur = c;
+        
         nbGrainesCase= new SimpleIntegerProperty(0);
         nbFourmi= new SimpleIntegerProperty(0);
         nbIteration= new SimpleIntegerProperty(0);
         
-        tailleFourmiliere= new SimpleIntegerProperty(0);
-        capaciteCase= new SimpleIntegerProperty(0);
-        vitesseSimu= new SimpleIntegerProperty(0);
-        probaGraine= new SimpleIntegerProperty(0);
-        probaFourmi= new SimpleIntegerProperty(0);
-        probaMur= new SimpleIntegerProperty(0);
+        tailleFourmiliere= new SimpleIntegerProperty(20);
+        capaciteCase= new SimpleIntegerProperty(10);
+        vitesseSimu= new SimpleIntegerProperty(1);
+        probaGraine= new SimpleIntegerProperty(50);
+        probaFourmi= new SimpleIntegerProperty(20);
+        probaMur= new SimpleIntegerProperty(30);
     }
     
     // ensemble de méthodes qui ont pour but d'être appelées pour mettre à jour les différents affichages grâce aux bindings 
@@ -67,20 +69,53 @@ public class ControleurBindings {
         nbFourmi.set(v);
     }
     
-    public void updateNbIteration(int v){
-        nbIteration.set(v);
-    }
-    
-    public void setStatsFourmiliere(StatsFourmiliere vueF){
-        statsFourmiliere = vueF;
+    public void updateNbIteration(){
+        nbIteration.set(nbIteration.get()+1);
     }
     
     
     // appelé une seule fois pour relier les différents composants entre eux 
     public void initBindings(){
+        StatsFourmiliere statsFourmiliere = mainControleur.getMainVue().getStats();
+        ParametreFourmiliere parametreFourmiliere = mainControleur.getMainVue().getParametre();
+        InitAlea parametreAleaFourmiliere = parametreFourmiliere.getAlea();
+        
         StringConverter<Number> converter = new NumberStringConverter();
         Bindings.bindBidirectional(statsFourmiliere.grainesProperty(), nbGrainesCase, converter);
         Bindings.bindBidirectional(statsFourmiliere.fourmisProperty(), nbFourmi, converter);
         Bindings.bindBidirectional(statsFourmiliere.iterationsProperty(), nbIteration, converter);
+        
+        Bindings.bindBidirectional(parametreFourmiliere.sizeProperty(), tailleFourmiliere, converter);
+        Bindings.bindBidirectional(parametreFourmiliere.capacityProperty(), capaciteCase, converter);
+        Bindings.bindBidirectional(parametreFourmiliere.speedProperty(), vitesseSimu);
+        
+        Bindings.bindBidirectional(parametreAleaFourmiliere.graineProperty(), probaGraine, converter);
+        Bindings.bindBidirectional(parametreAleaFourmiliere.fourmiProperty(), probaFourmi, converter);
+        Bindings.bindBidirectional(parametreAleaFourmiliere.murProperty(), probaMur, converter);
     }
+    
+    protected int getTaille(){
+        return tailleFourmiliere.get();
+    }
+    
+    protected int getCapacite(){
+        return capaciteCase.get();
+    }
+    
+    protected int getProbaGraine(){
+        return probaGraine.get();
+    }
+    
+    protected int getProbaFourmi(){
+        return probaFourmi.get();
+    }
+    
+    protected int getProbaMur(){
+        return probaMur.get();
+    }
+    
+    protected int getSpeed(){
+        return vitesseSimu.get();
+    }
+    
 }
