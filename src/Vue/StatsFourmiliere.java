@@ -5,21 +5,13 @@
 package Vue;
 
 import Vue.BetterComponents.BetterLabel;
-import javafx.application.Preloader;
-import javafx.application.Preloader.ProgressNotification;
-import javafx.application.Preloader.StateChangeNotification;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.beans.property.Property;
 import javafx.beans.property.StringProperty ;
 
-/**
- * Simple Preloader Using the ProgressBar Control
- *
- * @author 06sha
- */
+
+
+
 public class StatsFourmiliere extends VBox {
     private BetterLabel nbSeeds;
     private BetterLabel nbFourmi;
@@ -48,7 +40,4 @@ public class StatsFourmiliere extends VBox {
     public StringProperty iterationsProperty(){
         return nbIteration.textProperty();
     }
-    
-    
-    
 }

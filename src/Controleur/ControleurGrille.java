@@ -6,27 +6,17 @@ package Controleur;
 
 import Modele.Fourmiliere;
 import Vue.GrilleFourmiliere;
-import Vue.ParametreFourmiliere;
 
 import java.util.Random;
-import javafx.application.Preloader;
-import javafx.application.Preloader.ProgressNotification;
-import javafx.application.Preloader.StateChangeNotification;
-import javafx.scene.Scene;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
-/**
- * Simple Preloader Using the ProgressBar Control
- *
- * @author 06sha
- */
+
+
+
 public class ControleurGrille{
+    // Accès contrôleur principal
     private MainControleur mainControleur;
     
     ControleurGrille(MainControleur c){
-        
         mainControleur = c;
     }
     
@@ -37,25 +27,26 @@ public class ControleurGrille{
         int tailleFourmiliere = mainControleur.getCTRBinding().getTaille();
         int capacite = mainControleur.getCTRBinding().getCapacite();
         
+        // On vide la fourmilière et on mets à jour la vue
         fourmiliere.resetFourmiliere(tailleFourmiliere, capacite);
-        
         mainControleur.getMainVue().setNewGrid(tailleFourmiliere);
         
-        
+        // On récupère les différentes probabilités 
         int probaGraine = mainControleur.getCTRBinding().getProbaGraine();
         int probaFourmi = mainControleur.getCTRBinding().getProbaFourmi();
         int probaMur = mainControleur.getCTRBinding().getProbaMur();
         
-        int total = probaGraine + probaFourmi + probaMur + 50;
+        int total = probaGraine + probaFourmi + probaMur; // On fait le total de toutes les valeurs
         
         Random rand = new Random();
         
-        int value;
+        int value; // contient la valeur aléatoire
         
         for(int x = 0; x < tailleFourmiliere; x++){
             for(int y = 0; y < tailleFourmiliere; y++){
-                value = rand.nextInt(total);
+                value = rand.nextInt(total); // on change la valeur aléatoire pour chaque case
                 
+                // en fonction de la valeur aléatoire la case ne contiendra pas la même chose
                 if(value < probaMur) setWall(x, y);
                 else if(value < probaMur + probaFourmi) setFourmi(x, y);
                 else if(value < probaMur + probaFourmi + probaGraine){
@@ -77,6 +68,7 @@ public class ControleurGrille{
         
         fourmiliere.setQMax(mainControleur.getCTRBinding().getCapacite());
         
+        // On met la couleur correspondant à la même case de Fourmiliere
         for(int x = 0; x < XMax; x++){
             for(int y = 0; y < YMax; y++){
                 boolean bMur = fourmiliere.getMur(x+1, y+1);
@@ -87,16 +79,14 @@ public class ControleurGrille{
                     mainControleur.getMainVue().getGrid().setFourmiCase(x, y, fourmiliere.fourmiPorte(x+1, y+1));
                 }
                 else{
-                    
-                    int QMax = fourmiliere.getQMax();
                     int caseValue = fourmiliere.getQteGraines(x+1, y+1);
-                    
                     this.setSeedAmount(x, y, caseValue);
                 }
             }
         }
     }
     
+    // Ajout d'une quantité de graines à partir de la molette (les valeurs ont déjà été réduite) aux coordonnées (x, y)
     public void addGrainesMolette(double x, double y, double value){
         Fourmiliere fourmiliere = mainControleur.getFourmiliere();
         
@@ -108,6 +98,7 @@ public class ControleurGrille{
         setSeedAmount(x, y, caseValue);
     }
     
+    // Ajout d'un mur aux coordonnées (x, y)
     public void setWall(int x, int y){
         Fourmiliere fourmiliere = mainControleur.getFourmiliere();
         GrilleFourmiliere grilleFourmiliere = mainControleur.getMainVue().getGrid();
@@ -120,7 +111,8 @@ public class ControleurGrille{
         fourmiliere.setMur(coordX+1, coordY+1, !b);
         grilleFourmiliere.setWallCase(coordX, coordY, !b);
     }
-     
+    
+    // Ajout d'une fourmi aux coordonnées (x, y)
     public void setFourmi(double x, double y){
         Fourmiliere fourmiliere = mainControleur.getFourmiliere();
         GrilleFourmiliere grilleFourmiliere = mainControleur.getMainVue().getGrid();
@@ -135,6 +127,7 @@ public class ControleurGrille{
         mainControleur.getCTRBinding().updateNbFourmi(fourmiliere.getNbFourmis());
     }
     
+    // Initialisation d'une quantité de graine aux coordonnées (x, y)
     public void setSeedAmount(double x, double y, double value){
         Fourmiliere fourmiliere = mainControleur.getFourmiliere();
         GrilleFourmiliere grilleFourmiliere = mainControleur.getMainVue().getGrid();

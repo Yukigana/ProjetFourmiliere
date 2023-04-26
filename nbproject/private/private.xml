@@ -3,15 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Controleur/ControleurGrille.java</file>
-            <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Modele/Fourmiliere.java</file>
+            <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Vue/Loupe.java</file>
+            <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Vue/ActionsFourmiliere.java</file>
             <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Vue/InterfaceFourmiliere.java</file>
             <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Vue/InitAlea.java</file>
             <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Controleur/ControleurBindings.java</file>
             <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Vue/StatsFourmiliere.java</file>
             <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Vue/ParametreFourmiliere.java</file>
-            <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Controleur/MainControleur.java</file>
             <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Vue/GrilleFourmiliere.java</file>
+            <file>file:/D:/COURS/Semestre6/POO-IHM2/Projet/ProjetFourmiliere/src/Controleur/MainControleur.java</file>
         </group>
     </open-files>
 </project-private>

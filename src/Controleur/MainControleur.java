@@ -7,33 +7,29 @@ package Controleur;
 import Vue.InterfaceFourmiliere;
 import Modele.Fourmiliere;
 import javafx.application.Platform;
-import javafx.application.Preloader;
-import javafx.application.Preloader.ProgressNotification;
-import javafx.application.Preloader.StateChangeNotification;
-import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
-/**
- * Simple Preloader Using the ProgressBar Control
- *
- * @author 06sha
- */
+
+
+
 public class MainControleur {
+    // Vue principale
     private InterfaceFourmiliere mainVue;
     
-    
+    // Noyau fourmilière
     private Fourmiliere fourmiliere;
     
-    
+    // Les différents sous-contrôleur
     private ControleurGrille ctrGrille;
     private ControleurBindings ctrBinding;
     private ControleurThread ctrThread;
+    private ControleurLoupe ctrLoupe;
     
+    public double mouseX, mouseY; // position de la souris sur la grille de la fourmilière (utilisé uniquement pour la loupe)
+    private boolean isRunning; // si la fourmilière est allumée 
+    private boolean loupeRunning; // si la loupe est ouverte
     
     private Scene scene;
     
@@ -45,18 +41,44 @@ public class MainControleur {
         ctrBinding = new ControleurBindings(this);
         ctrGrille = new ControleurGrille(this);
         ctrThread = new ControleurThread(this);
+        ctrLoupe = new ControleurLoupe(this);
         
         // Initialisation de vue principale
         mainVue = new InterfaceFourmiliere(20, 20, this);
         
+        // Initialisation variable de base
+        isRunning = false;
+        loupeRunning = false;
         
-        
+        // Initialisation des différents sous-contrôleur
         ctrBinding.initBindings();
         ctrGrille.initStartFourmiliere();
         
+        // Déclarations boutons/actions
+        // Position de la souris sur la grille de la fourmilière
+        mainVue.getGrid().setOnMouseMoved(event -> {
+            mouseX = event.getSceneX();
+            mouseY = event.getSceneY();
+        });
         
+        // Ajout fourmi/mur dans la fourmilière
+        mainVue.getGrid().setOnMouseClicked(event -> {
+            if(!isRunning){
+                if(event.isShiftDown()){
+                    ctrGrille.setFourmi(event.getX() / 10, event.getY() / 10);
+                }
+                else ctrGrille.setWall((int)event.getX() / 10, (int)event.getY() / 10);
+            }
+        });
         
-        // Déclarations boutons 
+        // Ajout/suppression des graines dans la fourmilière
+        mainVue.getGrid().setOnScroll(event -> {
+            if(!isRunning){
+                ctrGrille.addGrainesMolette(event.getX() / 10, event.getY() / 10, event.getDeltaY()/20);
+            }
+        });
+        
+        // Bouton exit
         mainVue.getExit().setOnMouseClicked(new EventHandler(){
             @Override
             public void handle(Event event) {
@@ -64,29 +86,52 @@ public class MainControleur {
             }
         });
         
+        // Bouton permettant de recharger une nouvelle fourmilère à partir de nouveaux paramètres
         mainVue.getParametre().getReset().setOnMouseClicked(new EventHandler(){
             @Override
             public void handle(Event event) {
+                ctrBinding.getIteration().set(0);
                 ctrGrille.initStartFourmiliere();
             }
         });
         
-        mainVue.getActions().getPlay().setOnMouseClicked(new EventHandler(){
-            @Override
-            public void handle(Event event){
-                
-            }
-        });
-        
+        // Lancement de la simulation
         mainVue.getActions().getPlay().setOnAction(e -> {
+            isRunning = true;
             mainVue.getActions().getPlay().setDisable(true);
             ctrThread.createNewService();
             ctrThread.getService().start();
         });
         
+        // Arrêt de la simulation
         mainVue.getActions().getPause().setOnAction(e -> {
+            isRunning = false;
             mainVue.getActions().getPlay().setDisable(false);
             ctrThread.getService().cancel();
+        });
+        
+        // gestion du bouton loupe
+        mainVue.getActions().getLoupe().setOnAction(e -> {
+            
+            // action différente en fonction de si la fenêtre est déjà ouverte ou pas
+            /*
+                Si la fenêtre n'est pas ouverte on l'ouvre et on lance le thread qui gère la mise à jour de la loupe 
+                Sinon on arrête le thread et on ferme la fenêtre
+            */
+            if(!loupeRunning){
+                loupeRunning = true;
+                
+                ctrThread.createNewServiceLoupe();
+                ctrThread.getServiceLoupe().start();
+                
+                ctrLoupe.getStage().show();
+            }
+            else{
+                loupeRunning = false;
+                ctrThread.getServiceLoupe().cancel();
+                ctrLoupe.getStage().close();
+            }
+            
         });
         
         
@@ -94,23 +139,30 @@ public class MainControleur {
     }
     
     
-    public Scene getScene(){
+    /*
+        Différents get permettant la transmission aux sous-contrôleurs
+    */
+    public Scene getScene(){ // public pour l'AppFourmilière
         return scene;
     }
     
-    public ControleurGrille getCTRGrid(){
+    protected ControleurGrille getCTRGrid(){
         return ctrGrille;
     }
     
-    public ControleurBindings getCTRBinding(){
+    protected ControleurBindings getCTRBinding(){
         return ctrBinding;
     }
     
-    public Fourmiliere getFourmiliere(){
+    protected ControleurLoupe getCTRLoupe(){
+        return ctrLoupe;
+    }
+    
+    protected Fourmiliere getFourmiliere(){
         return fourmiliere;
     }
     
-    public InterfaceFourmiliere getMainVue(){
+    protected InterfaceFourmiliere getMainVue(){
         return mainVue;
     }
 }

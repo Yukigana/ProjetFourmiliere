@@ -4,20 +4,14 @@
  */
 package Vue;
 
-import javafx.application.Preloader;
-import javafx.application.Preloader.ProgressNotification;
-import javafx.application.Preloader.StateChangeNotification;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 
-/**
- * Simple Preloader Using the ProgressBar Control
- *
- * @author 06sha
- */
+
+
+
 public class ActionsFourmiliere extends HBox {
+    // Différents boutons
     private Button loupe;
     private Button play;
     private Button pause;

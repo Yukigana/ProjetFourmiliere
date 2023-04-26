@@ -4,30 +4,19 @@
  */
 package Controleur;
 
-import Modele.Fourmiliere;
 import Vue.StatsFourmiliere;
 import Vue.ParametreFourmiliere;
 import Vue.InitAlea;
-import javafx.application.Preloader;
-import javafx.application.Preloader.ProgressNotification;
-import javafx.application.Preloader.StateChangeNotification;
-import javafx.scene.Scene;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.binding.Bindings;
-import java.text.NumberFormat;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 
-/**
- * Simple Preloader Using the ProgressBar Control
- *
- * @author 06sha
- */
+
+
+
 public class ControleurBindings {
     // Info partie stats
     private IntegerProperty nbGrainesCase;
@@ -43,11 +32,13 @@ public class ControleurBindings {
     private IntegerProperty probaFourmi;
     private IntegerProperty probaMur;
     
+    // Accès contrôleur principal
     private MainControleur mainControleur;
     
     ControleurBindings(MainControleur c){
         mainControleur = c;
         
+        // initialisation des différents property avec leurs valeurs de base
         nbGrainesCase= new SimpleIntegerProperty(0);
         nbFourmi= new SimpleIntegerProperty(0);
         nbIteration= new SimpleIntegerProperty(0);
@@ -93,6 +84,12 @@ public class ControleurBindings {
         Bindings.bindBidirectional(parametreAleaFourmiliere.fourmiProperty(), probaFourmi, converter);
         Bindings.bindBidirectional(parametreAleaFourmiliere.murProperty(), probaMur, converter);
     }
+    /*
+        différents Get dont on peut avoir besoin 
+    */
+    protected IntegerProperty getIteration(){
+        return nbIteration;
+    }
     
     protected int getTaille(){
         return tailleFourmiliere.get();
@@ -114,8 +111,8 @@ public class ControleurBindings {
         return probaMur.get();
     }
     
-    protected int getSpeed(){
-        return vitesseSimu.get();
+    protected IntegerProperty getSpeed(){
+        return vitesseSimu;
     }
     
 }

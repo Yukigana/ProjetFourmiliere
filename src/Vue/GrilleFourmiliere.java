@@ -4,76 +4,62 @@
  */
 package Vue;
 
-import Controleur.ControleurGrille;
-import javafx.application.Preloader;
-import javafx.application.Preloader.ProgressNotification;
-import javafx.application.Preloader.StateChangeNotification;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javafx.scene.paint.Color;
-import javafx.geometry.Insets;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 
-/**
- * Simple Preloader Using the ProgressBar Control
- *
- * @author 06sha
- */
+
+
+
 public class GrilleFourmiliere extends GridPane {
+    // Grille de rectangle qui représentera la fourmilière
     Rectangle[][] grid;
     
-    private ControleurGrille c;
-    
-    public GrilleFourmiliere(int x, int y, ControleurGrille cg){
+    public GrilleFourmiliere(int x, int y, int sizeCase){
         super();
         
-        c = cg;
-        
-        Insets cellPadding = new Insets(1);
-        this.setStyle("-fx-border-color: black; -fx-border-width: 1px;");
-        this.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(5), Insets.EMPTY)));
+        // Initialisation de la grille uniquement en blanc (car au début il n'existe rien)
         this.grid = new Rectangle[x][y];
         for(int i = 0; i < x; i++){
             for(int u = 0; u < y; u++){
-                this.grid[i][u] = new Rectangle(0, 0, 10, 10);
+                this.grid[i][u] = new Rectangle(0, 0, sizeCase, sizeCase);
                 this.grid[i][u].setFill(Color.WHITE);
-                this.setMargin(this.grid[i][u], cellPadding);
                 this.add(this.grid[i][u], i, u);
             }
         }
-        
-        this.setOnMouseClicked(event -> {
-            if(event.isShiftDown()){
-                c.setFourmi(event.getX() / 12, event.getY() / 12);
-            }
-            else c.setWall((int)event.getX() / 12, (int)event.getY() / 12);
-        });
-        
-        this.setOnScroll(event -> {
-            c.addGrainesMolette(event.getX() / 12, event.getY() / 12, event.getDeltaY()/20);
-        });
-        
     }
     
+    /*
+        Méthodes permettant la modification de la grille
+    */
+    // Affiche une fourmi avec ou sans graine
     public void setFourmiCase(int x, int y, boolean seed){
         if(seed)grid[x][y].setFill(Color.GREEN);
         else grid[x][y].setFill(Color.BLUE);
     }
     
+    // Affiche un mur
     public void setWallCase(int x, int y, boolean yes){
         if(yes)grid[x][y].setFill(Color.BLACK);
         else grid[x][y].setFill(Color.WHITE);
     }
     
+    // Affiche une case +/- rouge en fonction de la quantité de graines 
     public void setQteGraines(int x, int y, int value){
         grid[x][y].setFill(Color.rgb(255, value, value));
+    }
+    
+    // Affiche un rectangle à partir d'une couleur
+    public void setRectangle(int x, int y, Color c){
+        grid[x][y].setFill(c);
+    }
+    
+    
+    
+    
+    // récupère le rectangle de coordonnées (x, y) (a pour but la récupération de la couleur par la loupe)
+    public Rectangle getRectangle(int x, int y){
+        return grid[x][y];
     }
     
 }

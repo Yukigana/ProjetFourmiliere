@@ -5,26 +5,15 @@
 package Vue;
 
 import Controleur.MainControleur;
-import javafx.application.Platform;
-import javafx.application.Preloader;
-import javafx.application.Preloader.ProgressNotification;
-import javafx.application.Preloader.StateChangeNotification;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
-/**
- * Simple Preloader Using the ProgressBar Control
- *
- * @author 06sha
- */
+
+
+
 public class InterfaceFourmiliere extends BorderPane {
     private Button exit;
     private StatsFourmiliere stats;
@@ -47,7 +36,7 @@ public class InterfaceFourmiliere extends BorderPane {
         
         v.getChildren().addAll(stats, parametre, actions);
         
-        this.grille = new GrilleFourmiliere(x, y, mainControleur.getCTRGrid());
+        this.grille = new GrilleFourmiliere(x, y, 10);
         this.pane = new Pane(grille);
         
         this.setCenter(pane);
@@ -66,12 +55,17 @@ public class InterfaceFourmiliere extends BorderPane {
         BorderPane.setAlignment(pane, Pos.CENTER_RIGHT);
     }
     
+    // Permet le changement de grille
     public void setNewGrid(int taille){
-        this.grille = new GrilleFourmiliere(taille, taille, mainControleur.getCTRGrid());
+        this.grille = new GrilleFourmiliere(taille, taille, 10);
         this.pane = new Pane(grille);
         this.setCenter(pane);
     }
     
+    
+    /*
+        Différents get permettant aux contrôleurs d'affecter des actions 
+    */
     public Button getExit(){
         return exit;
     }

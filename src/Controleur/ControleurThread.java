@@ -11,23 +11,22 @@ import javafx.concurrent.Task;
 import javafx.util.Duration;
 import javafx.concurrent.ScheduledService;
 
-/**
- * Simple Preloader Using the ProgressBar Control
- *
- * @author 06sha
- */
+
+
+
 public class ControleurThread {
-    
+    // Différents services (évolution fourmilère, loupe)
     private ScheduledService<Void> service;
+    private ScheduledService<Void> serviceLoupe;
     
+    // Accès contrôleur principal
     private MainControleur mainControleur;
     
     ControleurThread(MainControleur c){
         mainControleur = c;
-        
-        
     }
     
+    // Crée un service qui a pour but l'évolution de la fourmilière
     public void createNewService(){
         service = new ScheduledService<Void>(){
             @Override
@@ -35,27 +34,57 @@ public class ControleurThread {
                 return new Task<>(){
                     @Override
                     protected Void call() {
-                        mainControleur.getFourmiliere().evolue();
+                        mainControleur.getFourmiliere().evolue(); // On fait évoluer la fourmilière
                         return null;
                     }
                     
                     @Override
                     protected void succeeded() {
-                        mainControleur.getCTRBinding().updateNbIteration();
-                        mainControleur.getCTRGrid().initVueFourmiliere();
+                        mainControleur.getCTRBinding().updateNbIteration(); // Augmente d'un le compteur d'itérations 
+                        mainControleur.getCTRGrid().initVueFourmiliere(); // On met à jour la vue
                     }
-                            
+                    
                     @Override
-                    protected void failed() {
-                        mainControleur.getMainVue().getActions().getPlay().setDisable(false);
+                    protected void failed(){
+                        mainControleur.getCTRBinding().updateNbIteration(); // Augmente d'un le compteur d'itérations 
+                        mainControleur.getCTRGrid().initVueFourmiliere(); // On met à jour la vue
                     }
                 };
             }
         };
-        service.setPeriod(Duration.seconds(1 / (double)mainControleur.getCTRBinding().getSpeed()));
+        // La vitesse représente le nombre d'actions par seconde
+        service.setPeriod(Duration.seconds(1. / mainControleur.getCTRBinding().getSpeed().get()));
+        service.setRestartOnFailure(true);
+    }
+    
+    // Crée un service qui a pour but la mise à jour de la loupe en fonction de la position de la souris
+    public void createNewServiceLoupe(){
+        serviceLoupe = new ScheduledService<Void>(){
+            @Override
+            protected Task<Void> createTask(){
+                return new Task<>(){
+                    @Override
+                    protected Void call() {
+                        // On met à jour la loupe à partir des coordonnées de la souris sur la grille principale
+                        mainControleur.getCTRLoupe().setLoupe((int) mainControleur.mouseX / 10, (int) mainControleur.mouseY / 10);
+                        return null;
+                    }
+                    
+                    @Override
+                    protected void succeeded() {
+                    }
+                };
+            }
+        };
+        // 30 images par seconde
+        serviceLoupe.setPeriod(Duration.seconds(0.03));
     }
     
     public Service<Void> getService(){
         return service;
+    }
+    
+    public Service<Void> getServiceLoupe(){
+        return serviceLoupe;
     }
 }
